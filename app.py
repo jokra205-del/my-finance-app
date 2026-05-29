@@ -1,13 +1,13 @@
 import streamlit as st
 
-# 1. إعدادات الصفحة الفخمة الملكية
+# 1. إعدادات الصفحة الفخمة والملكية
 st.set_page_config(
     page_title="Mojtaba Ali | Financial Intelligence",
     page_icon="👑",
     layout="centered"
 )
 
-# تصميم الواجهة الكلاس بالألوان الفخمة (كروت عمودية واضحة وجريئة جداً)
+# تصميم الواجهة الكلاس بالألوان الفخمة (كروت عمودية مرنة واضحة جداً)
 st.markdown("""
     <style>
     /* الخلفية العامة */
@@ -18,8 +18,8 @@ st.markdown("""
     .royal-subtitle { text-align: center; color: #8a9ab0; font-size: 15px; margin-bottom: 30px; }
     
     /* ستايل صناديق الإدخال */
-    .stNumberInput div div input, .stTextInput div div input { background-color: #131722 !important; color: #fff !important; border: 1px solid #2a3142 !important; border-radius: 8px !important; font-size: 18px !important; font-weight: bold !important; }
-    .stNumberInput div div input:focus, .stTextInput div div input:focus { border: 1px solid #D4AF37 !important; box-shadow: 0 0 5px rgba(212, 175, 55, 0.3) !important; }
+    .stNumberInput div div input { background-color: #131722 !important; color: #fff !important; border: 1px solid #2a3142 !important; border-radius: 8px !important; font-size: 18px !important; font-weight: bold !important; }
+    .stNumberInput div div input:focus { border: 1px solid #D4AF37 !important; box-shadow: 0 0 5px rgba(212, 175, 55, 0.3) !important; }
     
     /* أزرار ملوك المال */
     .stButton>button { background: linear-gradient(135deg, #D4AF37 0%, #AA7C11 100%) !important; color: #0b0d12 !important; font-weight: bold !important; border: none !important; border-radius: 8px !important; padding: 12px 30px !important; transition: all 0.3s ease !important; width: 100%; font-size: 18px !important; }
@@ -45,27 +45,20 @@ st.markdown("""
 
 # الهيدر الأساسي للموقع
 st.markdown("<div class='royal-title'>الميزان الذكي لإدارة الثروات</div>", unsafe_allow_html=True)
-st.markdown("<div class='royal-subtitle'>منظومة مالية مؤتمتة وحاسمة بمفهوم الثراء العالمي 50-30-20</div>", unsafe_allow_html=True)
+st.markdown("<div class='royal-subtitle'>منظومة مالية مؤتمتة وحاسمة بمفهوم إدارة الثراء المرن</div>", unsafe_allow_html=True)
 
-# إدارة الـ session_state لمنع فقدان البيانات أثناء التنقل بين الصفحات
+# إدارة الـ session_state لمنع فقدان البيانات أثناء التنقل
 if 'step' not in st.session_state:
     st.session_state.step = 1
-if 'expenses' not in st.session_state:
-    st.session_state.expenses = {}
-if 'salary' not in st.session_state:
-    st.session_state.salary = 100.0
-if 'currency' not in st.session_state:
-    st.session_state.currency = "دولار أمريكي ($)"
 
-# ==================== 🌟 المرحلة الأولى: تحديد العملة ورأس المال ====================
+# ==================== 🌟 المرحلة الأولى: تحديد نظام العملة ورأس المال ====================
 if st.session_state.step == 1:
-    st.markdown("### 📥 إيداع رأس المال وتحديد نظام العملة")
+    st.markdown("### 📥 خطوة 1: تهيئة الحساب والعملة")
     
-    # اختيار العملة بالبداية وقفلها
-    currency_type = st.radio("اختر عملة النظام المالي للحساب (سيتم قفلها في الخطوات القادمة):", ["دولار أمريكي ($)", "دينار عراقي (IQD)"], horizontal=True)
+    currency_type = st.radio("اختر عملة النظام المالي للحساب:", ["دولار أمريكي ($)", "دينار عراقي (IQD)"], horizontal=True)
     st.session_state.currency = currency_type
     
-    # ضبط القيم التلقائية الفخمة (100,000 للدينار و 100 للدولار) حسب طلبك بالضبط
+    # ضبط القيم التلقائية الفخمة (100,000 للدينار و 100 للدولار)
     if "دينار" in currency_type:
         default_val = 100000
         step_val = 25000
@@ -75,46 +68,32 @@ if st.session_state.step == 1:
         step_val = 10
         symbol = "$"
         
-    st.session_state.salary = st.number_input(f"أدخل قيمة رأس المال الحالي المستهدف ({symbol}):", min_value=0, value=default_val, step=step_val)
+    st.session_state.salary = st.number_input(f"أدخل إجمالي رأس المال أو الراتب الحالي ({symbol}):", min_value=0, value=default_val, step=step_val)
     
     st.markdown("<br>", unsafe_allow_html=True)
-    if st.button("التالي: إضافة الضرائب والالتزامات ➡️"):
+    if st.button("التالي: توزيع الحصص المالية المخصصة ➡️"):
         st.session_state.step = 2
         st.rerun()
 
-# ==================== 🌟 المرحلة الثانية: إضافة الالتزامات والضرائب (مربعات منفصلة وصافية) ====================
+# ==================== 🌟 المرحلة الثانية: المستخدم يحدد المبالغ بكيفه بكل مرونة وحرية ====================
 elif st.session_state.step == 2:
     symbol = "د.ع" if "دينار" in st.session_state.currency else "$"
     
-    st.markdown(f"### 📝 بيان الالتزامات والضرائب الثابتة (رأس المال: {st.session_state.salary:,} {symbol})")
-    st.caption("اكتب اسم الالتزام في المربع الأول، والمبلغ الصافي في المربع الثاني بدون أي كلمات أخرى.")
+    st.markdown(f"### 📝 خطوة 2: حدد مبالغ التوزيع الذكي (رأس المال الحالي: {st.session_state.salary:,} {symbol})")
+    st.caption("أدخل المبالغ التي تريد تخصيصها لكل جانب بحرية تامة، والسيستم سيقوم بجمعها وحساب المتبقي تلقائياً.")
     
-    # مربعين منفصلين بصف واحد لترتيب الواجهة
-    col_name, col_val = st.columns([2, 1])
-    with col_name:
-        expense_name = st.text_input("اسم الالتزام أو الضريبة (مثال: نت، ضرائب):", key="exp_name_input")
-    with col_val:
-        expense_value = st.number_input(f"المبلغ ({symbol}):", min_value=0, value=0, key="exp_val_input")
+    # المستخدم يدخل المبالغ بكيفه وبدون نسب إجبارية
+    val_step = 10000 if symbol == "د.ع" else 10
     
-    # زر واضح وصريح لإضافة التزام آخر
-    if st.button("➕ إضافة هذا الالتزام / ضريبة أخرى"):
-        if expense_value > 0:
-            name_final = expense_name.strip() if expense_name.strip() else "التزام غير مسمى"
-            st.session_state.expenses[name_final] = expense_value
-            st.toast(f"تم تسجيل {name_final} بمبلغ {expense_value:,} {symbol} بنجاح!", icon="✅")
-            st.rerun()
-        else:
-            st.error("⚠️ يرجى إدخال مبلغ أكبر من صفر لإضافته للحسبة.")
-
-    # عرض كشف الالتزامات المضافة حالياً إن وجدت لتنبيه المستخدم
-    if st.session_state.expenses:
-        st.markdown("<br>📋 **الالتزامات والضرائب المسجلة حالياً:**", unsafe_allow_html=True)
-        for name, val in list(st.session_state.expenses.items()):
-            st.write(f"🔸 {name}: {val:,} {symbol}")
-        if st.button("🗑️ تفريغ كافة الالتزامات والبدء مجدداً"):
-            st.session_state.expenses = {}
-            st.rerun()
-            
+    save_input = st.number_input(f"المبلغ المخصص للادخار ({symbol}):", min_value=0, value=0, step=val_step)
+    invest_input = st.number_input(f"المبلغ المخصص للاستثمار ({symbol}):", min_value=0, value=0, step=val_step)
+    tax_input = st.number_input(f"المبلغ المخصص للضرائب والالتزامات الثابتة (مثل النت والبيت) ({symbol}):", min_value=0, value=0, step=val_step)
+    
+    # حفظ المدخلات في الـ session_state
+    st.session_state.savings = save_input
+    st.session_state.investment = invest_input
+    st.session_state.taxes = tax_input
+    
     st.markdown("<br>", unsafe_allow_html=True)
     col_back, col_next = st.columns(2)
     with col_back:
@@ -122,86 +101,68 @@ elif st.session_state.step == 2:
             st.session_state.step = 1
             st.rerun()
     with col_next:
-        if st.button("إنهاء وإصدار التقرير الحاسم 📊"):
+        if st.button("إنهاء وإصدار التقرير المالي الحاسم 📊"):
             st.session_state.step = 3
             st.rerun()
 
-# ==================== 🌟 المرحلة الثالثة: التقرير المالي النهائي الحاسم (الأربع مربعات الثابتة) ====================
+# ==================== 🌟 المرحلة الثالثة: التقرير المالي النهائي (الأربع مربعات الثابتة والواضحة) ====================
 elif st.session_state.step == 3:
     symbol = "د.ع" if "دينار" in st.session_state.currency else "$"
     st.markdown("### 📊 التقرير المالي النهائي الحاسم")
     
-    # العمليات الحسابية الصارمة المبنية على قاعدة 50-30-20 الفخمة
+    # جلب القيم التي أدخلها المستخدم بكيفه
     salary = float(st.session_state.salary)
+    savings = float(st.session_state.savings)
+    investment = float(st.session_state.investment)
+    taxes = float(st.session_state.taxes)
     
-    # 1. تقسيم الحصص الثابتة (10% ادخار، 10% استثمار) ليكون المجموع 20% لبناء الثروة
-    savings_share = salary * 0.10
-    investment_share = salary * 0.10
-    
-    # 2. حساب مجموع الضرائب والالتزامات المضافة من قبل المستخدم
-    total_taxes_expenses = float(sum(st.session_state.expenses.values()))
-    
-    # 3. حساب الفلوس المتاحة للرفاهية والصرف الحر (حصة الـ 30%)
-    allowed_needs = salary * 0.50
-    allowed_wants = salary * 0.30
-    
-    # موازنة الحسبة في حال تجاوزت الالتزامات حصتها الـ 50% تلتهم من حصة الرفاهية
-    if total_taxes_expenses > allowed_needs:
-        final_free_cash = allowed_wants - (total_taxes_expenses - allowed_needs)
-    else:
-        final_free_cash = allowed_wants
+    # الحسبة الذكية: رأس المال ناقص (الادخار + الاستثمار + الضرائب والالتزامات)
+    final_free_cash = salary - (savings + investment + taxes)
 
-    # ----------- 📊 عرض الأربع مربعات الثابتة عمودياً وبخط كبير جداً -----------
+    # ----------- 📊 عرض الأربع مربعات الثابتة عمودياً وبخط كبير وواضح جداً -----------
     
-    # المربع الأول: الإدخار (10%)
+    # المربع الأول: الإدخار
     st.markdown(f"""
         <div class="vertical-card card-save">
-            <span class="card-title">💰 أولاً: حصالة الادخار الملكية (حصة الـ 10%)</span>
-            <p class="card-value">{savings_share:,} {symbol}</p>
+            <span class="card-title">💰 أولاً: حصالة الادخار المخصصة</span>
+            <p class="card-value">{savings:,} {symbol}</p>
         </div>
     """, unsafe_allow_html=True)
     
-    # المربع الثاني: الاستثمار (10%)
+    # المربع الثاني: الاستثمار
     st.markdown(f"""
         <div class="vertical-card card-invest">
-            <span class="card-title">📈 ثانياً: خزنة الاستثمار وأصول الثروة (حصة الـ 10%)</span>
-            <p class="card-value">{investment_share:,} {symbol}</p>
+            <span class="card-title">📈 ثانياً: خزنة الاستثمار وأصول الثروة</span>
+            <p class="card-value">{investment:,} {symbol}</p>
         </div>
     """, unsafe_allow_html=True)
     
     # المربع الثالث: الضرائب والالتزامات
     st.markdown(f"""
         <div class="vertical-card card-tax">
-            <span class="card-title">📋 ثالثاً: مجموع الضرائب والالتزامات المضافة</span>
-            <p class="card-value">{total_taxes_expenses:,} {symbol}</p>
+            <span class="card-title">📋 ثالثاً: مجموع الضرائب والالتزامات الثابتة</span>
+            <p class="card-value">{taxes:,} {symbol}</p>
         </div>
     """, unsafe_allow_html=True)
     
-    # عرض تفصيلي للالتزامات في حال وجودها داخل منسدلة كلاس
-    if st.session_state.expenses:
-        with st.expander("🔍 كشف وتفاصيل الضرائب والالتزامات المسجلة"):
-            for name, val in st.session_state.expenses.items():
-                st.write(f"🔹 **{name}**: {val:,} {symbol}")
-                
-    # المربع الرابع: الفلوس الحرة للرفاهية (30%)
+    # المربع الرابع: الفلوس الحرة للرفاهية (الناتج الصافي التلقائي)
     st.markdown(f"""
         <div class="vertical-card card-wants">
-            <span class="card-title">💸 رابعاً: صافي الأرباح للرفاهية الحرة (حصة الـ 30% القابلة للصرف)</span>
+            <span class="card-title">💸 رابعاً: صافي الأرباح للرفاهية الحرة (المتبقي لك)</span>
             <p class="card-value" style="color:#D4AF37;">{final_free_cash:,} {symbol}</p>
-            <small style="color:#8a9ab0;">هذه الفلوس المتاحة إلك تصرفها وتتونس بيها بكل حرية مطلقة</small>
+            <small style="color:#8a9ab0;">هذه الفلوس المتاحة إلك تصرفها وتتونس بيها بكل حرية مطلقة بعد تأمين الحصص الفوق</small>
         </div>
     """, unsafe_allow_html=True)
     
-    # التوجيه الاستراتيجي النهائي للملوك
+    # التوجيه الاستراتيجي التلقائي
     st.markdown("<br>", unsafe_allow_html=True)
     if final_free_cash >= 0:
-        st.success("✅ الإستراتيجية المالية مستقرة وضمن نطاق الثراء الحصين. الأصول والمدخرات مؤمنة بالكامل.")
+        st.success("✅ التوزيع المالي مستقر وآمن. صافي أرباحك بالموجب وخزائنك مؤمنة بالكامل.")
     else:
-        st.error("⚠️ تنبيه مالي حرج: الالتزامات والضرائب تجاوزت النطاق الآمن وتأكل من حصة أرباحك الحرة!")
+        st.error("⚠️ تنبيه عجز مالي: المبالغ التي قمت بتوزيعها تجاوزت إجمالي رأس المال الحالي! يرجى إعادة ضبط الميزانية.")
         
     if st.button("🔄 إعادة حساب ميزانية جديدة (إعادة بدء)"):
         st.session_state.step = 1
-        st.session_state.expenses = {}
         st.rerun()
 
 # 4. فوتر الحقوق الملكي بأسفل الصفحة ومحاذاته على اليسار بالكامل بلمسة IT
