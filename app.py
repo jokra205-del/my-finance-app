@@ -5,7 +5,7 @@ import json
 st.set_page_config(
     page_title="Mojtaba Ali | Financial Intelligence",
     page_icon="👑",
-    layout="centered"
+    layout="wide"  # تحويل العرض إلى واسع ليناسب التقسيم اليمين واليسار
 )
 
 # تصميم الواجهة الكلاس بالألوان الفخمة والكروت العمودية الواضحة جداً
@@ -15,8 +15,13 @@ st.markdown("""
     .main { background-color: #0b0d12; }
     
     /* الهيدر الملكي */
-    .royal-title { color: #D4AF37; font-family: 'Segoe UI', sans-serif; text-align: center; font-weight: 800; font-size: 34px; letter-spacing: 1px; margin-bottom: 5px; }
-    .royal-subtitle { text-align: center; color: #8a9ab0; font-size: 15px; margin-bottom: 30px; }
+    .royal-title { color: #D4AF37; font-family: 'Segoe UI', sans-serif; text-align: center; font-weight: 800; font-size: 36px; letter-spacing: 1px; margin-bottom: 5px; }
+    .royal-subtitle { text-align: center; color: #8a9ab0; font-size: 16px; margin-bottom: 30px; }
+    
+    /* لوحة الشرح الترحيبية في البداية */
+    .welcome-box { background: rgba(212, 175, 55, 0.05); border: 1px solid #D4AF37; border-radius: 12px; padding: 20px; margin-bottom: 25px; text-align: right; }
+    .welcome-title { color: #D4AF37; font-size: 20px; font-weight: bold; margin-bottom: 10px; display: block; }
+    .welcome-text { color: #c4d1e6; font-size: 15px; line-height: 1.6; }
     
     /* ستايل صناديق الإدخال والـ selectbox */
     .stNumberInput div div input, .stTextInput div div input, .stSelectbox div div div { background-color: #131722 !important; color: #fff !important; border: 1px solid #2a3142 !important; border-radius: 8px !important; font-size: 18px !important; font-weight: bold !important; }
@@ -36,15 +41,15 @@ st.markdown("""
     .card-tax { background: rgba(239, 68, 68, 0.08); border: 3px solid #ef4444; } /* المربع الأحمر الملكي للضرائب */
     .card-wants { background: rgba(212, 175, 55, 0.08); border: 2px solid #D4AF37; }
     
-    .card-title { font-size: 18px; font-weight: bold; color: #ffffff; margin-bottom: 8px; display: block; }
-    .card-value { font-size: 40px; font-weight: 800; color: #ffffff; margin: 0; }
+    .card-title { font-size: 19px; font-weight: bold; color: #ffffff; margin-bottom: 8px; display: block; }
+    .card-value { font-size: 42px; font-weight: 800; color: #ffffff; margin: 0; }
     
     /* تفاصيل الالتزامات داخل المربع الأحمر */
-    .tax-detail-item { font-size: 18px; color: #ffb3b3; margin: 5px 0; font-weight: bold; }
+    .tax-detail-item { font-size: 18px; color: #ffb3b3; margin: 8px 0; font-weight: bold; }
     
     /* صندوق التقرير التفاعلي والمصاريف */
-    .action-box { background-color: #131722; border: 1px dashed #2a3142; border-radius: 12px; padding: 20px; margin-top: 25px; }
-    .action-title { color: #D4AF37; font-size: 20px; font-weight: bold; margin-bottom: 15px; display: block; text-align: center; }
+    .action-box { background-color: #131722; border: 2px solid #2a3142; border-radius: 12px; padding: 25px; margin-bottom: 20px; }
+    .action-title { color: #D4AF37; font-size: 22px; font-weight: bold; margin-bottom: 15px; display: block; text-align: center; border-bottom: 1px solid #2a3142; padding-bottom: 10px; }
     
     /* فوتر مخصص على اليسار بالكامل */
     .footer-left { text-align: left; direction: ltr; color: #778899; font-size: 13px; margin-top: 60px; border-top: 1px solid #1c2333; padding-top: 25px; padding-left: 10px; }
@@ -80,6 +85,19 @@ if 'wallet_initialized' not in st.session_state:
 
 # ==================== 🌟 المرحلة الأولى: تحديد نظام العملة ورأس المال التلقائي ====================
 if st.session_state.step == 1:
+    # 👑 إضافة اللوحة الترحيبية الشارحة للنظام بالبداية
+    st.markdown("""
+        <div class="welcome-box">
+            <span class="welcome-title">👑 أهلاً بك في منظومة الذكاء المالي التراكمية</span>
+            <p class="welcome-text">
+                هذا النظام مصمم لإدارة ثروتك بشكل ذكي ومحفوظ بالكامل <b>على جهازك الشخصي</b> دون الحاجة لسيرفرات للحفاظ على الخصوصية.<br>
+                <b>كيف يعمل النظام؟</b><br>
+                1. تقوم بإدخال رأس المال والضرائب ليتم تقسيم الصافي فوراً حسب قاعدة الأغنياء المرنة (20% ادخار، 30% استثمار، 50% رفاهية حرة).<br>
+                2. ستحصل على <b>لوحة تحكم تفاعلية ذكية</b> تمكنك من إيداع أموال جديدة في أي وقت ليتم دمجها تراكمياً مع المبالغ السابقة، بالإضافة لخصم مصاريفك اليومية وإصدار تقارير حاسمة لاستهلاكك أولاً بأول!
+            </p>
+        </div>
+    """, unsafe_allow_html=True)
+
     st.markdown("### 📥 خطوة 1: تحديد رأس المال والعملة")
     
     currency_type = st.radio("اختر عملة النظام المالي الأساسية الحالية للبرنامج:", ["دولار أمريكي ($)", "دينار عراقي (IQD)"], horizontal=True)
@@ -143,7 +161,6 @@ elif st.session_state.step == 3:
     salary = float(st.session_state.salary)
     expenses_list = st.session_state.get('final_expenses', [])
     
-    # تصليح السطر 146 (إغلاق قوسي المجموع والـ float بشكل سليم)
     total_taxes = float(sum([item['value'] for item in expenses_list]))
     remaining_net = max(0.0, salary - total_taxes)
     
@@ -154,115 +171,123 @@ elif st.session_state.step == 3:
         st.session_state.accumulated_wants = remaining_net * 0.50
         st.session_state.wallet_initialized = True
 
-    # ----------- 📊 عرض الأربع مربعات الثابتة التراكمية -----------
+    # ----------- 📊 عرض الثلاث خزن الأساسية في الأعلى بشكل واضح وجذاب -----------
+    col_card1, col_card2, col_card3 = st.columns(3)
     
-    # المربع الأول: الإدخار التراكمي
-    st.markdown(f"""
-        <div class="vertical-card card-save">
-            <span class="card-title">💰 حصالة الادخار الملكية التراكمية (20% من الصافي)</span>
-            <p class="card-value">{st.session_state.accumulated_savings:,.2f} {symbol}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    # المربع الثاني: الاستثمار التراكمي
-    st.markdown(f"""
-        <div class="vertical-card card-invest">
-            <span class="card-title">📈 خزنة الاستثمار وأصول الثروة التراكمية (30% من الصافي)</span>
-            <p class="card-value">{st.session_state.accumulated_investment:,.2f} {symbol}</p>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    # المربع الثالث: الضرائب والالتزامات الحالية
-    tax_items_html = ""
-    if expenses_list:
-        for item in expenses_list:
-            tax_items_html += f"<div class='tax-detail-item'>🔸 {item['name']}: {item['value']:,} {symbol}</div>"
-    else:
-        tax_items_html = "<div class='tax-detail-item'>لا توجد ضرائب أو التزامات مضافة</div>"
-        
-    st.markdown(f"""
-        <div class="vertical-card card-tax">
-            <span class="card-title">🛑 مجموع كافة الضرائب والالتزامات لهذا الشهر</span>
-            <p class="card-value" style="margin-bottom: 15px;">{total_taxes:,} {symbol}</p>
-            <div style="text-align: right; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 10px;">
-                {tax_items_html}
+    with col_card1:
+        st.markdown(f"""
+            <div class="vertical-card card-save">
+                <span class="card-title">💰 حصالة الادخار الملكية (20%)</span>
+                <p class="card-value">{st.session_state.accumulated_savings:,.2f} {symbol}</p>
             </div>
-        </div>
-    """, unsafe_allow_html=True)
-    
-    # المربع الرابع: الرفاهية الحرة المتبقية والمحفوظة
-    st.markdown(f"""
-        <div class="vertical-card card-wants">
-            <span class="card-title">💸 صافي الأرباح والرفاهية التراكمية الحرة (50% من الصافي)</span>
-            <p class="card-value" style="color:#D4AF37;">{st.session_state.accumulated_wants:,.2f} {symbol}</p>
-            <small style="color:#8a9ab0;">الرصيد الحالي المتاح للرفاهية بعد حساب كافة الخصومات والإضافات التراكمية</small>
-        </div>
-    """, unsafe_allow_html=True)
-
-    # ==================== 🛠️ القسم الذكي الجديد: الإيداع التراكمي وإدارة المصاريف ====================
-    st.markdown("<div class='action-box'>", unsafe_allow_html=True)
-    st.markdown("<span class='action-title'>⚡ لوحة التحكم التفاعلية الذكية (إيداع وصرف)</span>", unsafe_allow_html=True)
-    
-    tab1, tab2, tab3 = st.tabs(["💵 إيداع أموال جديدة", "📉 تسجيل حركة صرف", "📜 تقرير السجل المالي"])
-    
-    with tab1:
-        st.write("كلما تجيك فلوس جديدة، اكتبها هنا وراح تتقسم تلقائياً وتتزود على الخزن الفوق بدون ما تمسح القديم!")
-        new_deposit = st.number_input(f"المبلغ المراد إيداعه وتوزيعه ({symbol}):", min_value=0.0, step=10.0, key="dep_input")
-        if st.button("تأكيد الإيداع الحواري ودمجه بالمحفظة 📥"):
-            if new_deposit > 0:
-                st.session_state.accumulated_savings += new_deposit * 0.20
-                st.session_state.accumulated_investment += new_deposit * 0.30
-                st.session_state.accumulated_wants += new_deposit * 0.50
-                
-                st.session_state.expense_log.insert(0, f"📥 تم إيداع {new_deposit:,} {symbol} وتوزيعها بنجاح.")
-                
-                ايداع_وحفظ_بالجهاز("mojtaba_wallet", {
-                    "save": st.session_state.accumulated_savings,
-                    "invest": st.session_state.accumulated_investment,
-                    "wants": st.session_state.accumulated_wants
-                })
-                st.success("تمت إضافة المبلغ وتحديث الصناديق الفوق فوراً بنجاح!")
-                st.rerun()
-
-    with tab2:
-        st.write("اكتب شكد صرفت فلوس وحدد من أي صندوق تريد تطرحها حتى تسوي تقرير حاسم للاستهلاك:")
-        expense_amount = st.number_input(f"المبلغ المصروف ({symbol}):", min_value=0.0, step=10.0, key="exp_input")
-        target_fund = st.selectbox("اصرف هذا المبلغ من قسم:", ["💸 صافي الأرباح للرفاهية الحرة", "💰 حصالة الادخار الملكية", "📈 خزنة الاستثمار والأصول"])
+        """, unsafe_allow_html=True)
         
-        if st.button("تحديث وخصم المصاريف فوراً 📉"):
-            if expense_amount > 0:
-                if target_fund == "💸 صافي الأرباح للرفاهية الحرة":
-                    st.session_state.accumulated_wants -= expense_amount
-                    fund_name = "الرفاهية"
-                elif target_fund == "💰 حصالة الادخار الملكية":
-                    st.session_state.accumulated_savings -= expense_amount
-                    fund_name = "الادخار"
-                else:
-                    st.session_state.accumulated_investment -= expense_amount
-                    fund_name = "الاستثمار"
-                
-                st.session_state.expense_log.insert(0, f"📉 تم صرف {expense_amount:,} {symbol} من قسم {fund_name}.")
-                
-                ايداع_وحفظ_بالجهاز("mojtaba_wallet", {
-                    "save": st.session_state.accumulated_savings,
-                    "invest": st.session_state.accumulated_investment,
-                    "wants": st.session_state.accumulated_wants
-                })
-                st.warning(f"تم خصم {expense_amount} من حساب {fund_name} وتحديث التقرير الحاسم!")
-                st.rerun()
-                
-    with tab3:
-        st.write("📋 سجل حركات حسابك التراكمي الحاسم:")
-        if st.session_state.expense_log:
-            for log in st.session_state.expense_log:
-                st.markdown(f"<p style='color:#8a9ab0; font-weight:bold; margin:5px 0;'>{log}</p>", unsafe_allow_html=True)
-        else:
-            st.caption("السجل فارغ حالياً، لم يتم إجراء عمليات إيداع أو صرف بعد.")
-            
-    st.markdown("</div>", unsafe_allow_html=True)
+    with col_card2:
+        st.markdown(f"""
+            <div class="vertical-card card-invest">
+                <span class="card-title">📈 خزنة الاستثمار والأصول (30%)</span>
+                <p class="card-value">{st.session_state.accumulated_investment:,.2f} {symbol}</p>
+            </div>
+        """, unsafe_allow_html=True)
+        
+    with col_card3:
+        st.markdown(f"""
+            <div class="vertical-card card-wants">
+                <span class="card-title">💸 صافي الرفاهية الحرة (50%)</span>
+                <p class="card-value" style="color:#D4AF37;">{st.session_state.accumulated_wants:,.2f} {symbol}</p>
+            </div>
+        """, unsafe_allow_html=True)
 
-    # زر إعادة البدء وتصفير المحفظة بالكامل
     st.markdown("<br>", unsafe_allow_html=True)
+
+    # 🔀 تقسيم الصفحة الأخيرة: اليمين لوحة التحكم الذكية، واليسار مربع الضرائب والالتزامات
+    col_right_panel, col_left_panel = st.columns([1.3, 1])  # جهة اليمين أعرض قليلاً للتحكم والتفاعل
+
+    # ==================== ➡️ جهة اليمين: لوحة التحكم التفاعلية الذكية (إيداع وصرف) ====================
+    with col_right_panel:
+        st.markdown("<div class='action-box'>", unsafe_allow_html=True)
+        st.markdown("<span class='action-title'>⚡ لوحة التحكم التفاعلية الذكية</span>", unsafe_allow_html=True)
+        
+        tab1, tab2, tab3 = st.tabs(["💵 إيداع أموال جديدة", "📉 تسجيل حركة صرف", "📜 تقرير السجل المالي"])
+        
+        with tab1:
+            st.write("كلما تجيك فلوس جديدة، اكتبها هنا وراح تتقسم تلقائياً وتتزود على الخزن الفوق بدون ما تمسح القديم!")
+            new_deposit = st.number_input(f"المبلغ المراد إيداعه وتوزيعه ({symbol}):", min_value=0.0, step=10.0, key="dep_input")
+            if st.button("تأكيد الإيداع الحواري ودمجه بالمحفظة 📥"):
+                if new_deposit > 0:
+                    st.session_state.accumulated_savings += new_deposit * 0.20
+                    st.session_state.accumulated_investment += new_deposit * 0.30
+                    st.session_state.accumulated_wants += new_deposit * 0.50
+                    
+                    st.session_state.expense_log.insert(0, f"📥 تم إيداع {new_deposit:,} {symbol} وتوزيعها بنجاح.")
+                    
+                    ايداع_وحفظ_بالجهاز("mojtaba_wallet", {
+                        "save": st.session_state.accumulated_savings,
+                        "invest": st.session_state.accumulated_investment,
+                        "wants": st.session_state.accumulated_wants
+                    })
+                    st.success("تمت إضافة المبلغ وتحديث الصناديق الفوق فوراً بنجاح!")
+                    st.rerun()
+
+        with tab2:
+            st.write("اكتب شكد صرفت فلوس وحدد من أي صندوق تريد تطرحها حتى تسوي تقرير حاسم للاستهلاك:")
+            expense_amount = st.number_input(f"المبلغ المصروف ({symbol}):", min_value=0.0, step=10.0, key="exp_input")
+            target_fund = st.selectbox("اصرف هذا المبلغ من قسم:", ["💸 صافي الأرباح للرفاهية الحرة", "💰 حصالة الادخار الملكية", "📈 خزنة الاستثمار والأصول"])
+            
+            if st.button("تحديث وخصم المصاريف فوراً 📉"):
+                if expense_amount > 0:
+                    if target_fund == "💸 صافي الأرباح للرفاهية الحرة":
+                        st.session_state.accumulated_wants -= expense_amount
+                        fund_name = "الرفاهية"
+                    elif target_fund == "💰 حصالة الادخار الملكية":
+                        st.session_state.accumulated_savings -= expense_amount
+                        fund_name = "الادخار"
+                    else:
+                        st.session_state.accumulated_investment -= expense_amount
+                        fund_name = "الاستثمار"
+                    
+                    st.session_state.expense_log.insert(0, f"📉 تم صرف {expense_amount:,} {symbol} من قسم {fund_name}.")
+                    
+                    ايداع_وحفظ_بالجهاز("mojtaba_wallet", {
+                        "save": st.session_state.accumulated_savings,
+                        "invest": st.session_state.accumulated_investment,
+                        "wants": st.session_state.accumulated_wants
+                    })
+                    st.warning(f"تم خصم {expense_amount} من حساب {fund_name} وتحديث التقرير الحاسم!")
+                    st.rerun()
+                    
+        with tab3:
+            st.write("📋 سجل حركات حسابك التراكمي الحاسم:")
+            if st.session_state.expense_log:
+                for log in st.session_state.expense_log:
+                    st.markdown(f"<p style='color:#8a9ab0; font-weight:bold; margin:5px 0;'>{log}</p>", unsafe_allow_html=True)
+            else:
+                st.caption("السجل فارغ حالياً، لم يتم إجراء عمليات إيداع أو صرف بعد.")
+                
+        st.markdown("</div>", unsafe_allow_html=True)
+
+    # ==================== ⬅️ جهة اليسار: مجموع كافة الضرائب والالتزامات التفصيلية ====================
+    with col_left_panel:
+        tax_items_html = ""
+        if expenses_list:
+            for item in expenses_list:
+                tax_items_html += f"<div class='tax-detail-item'>🔸 {item['name']}: {item['value']:,} {symbol}</div>"
+        else:
+            tax_items_html = "<div class='tax-detail-item'>لا توجد ضرائب أو التزامات مضافة</div>"
+            
+        st.markdown(f"""
+            <div class="vertical-card card-tax" style="height: 100%; min-height: 380px;">
+                <span class="card-title">🛑 مجموع الضرائب والالتزامات الثابتة</span>
+                <p class="card-value" style="margin-bottom: 20px; color: #ff4b4b;">{total_taxes:,} {symbol}</p>
+                <div style="text-align: right; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 15px;">
+                    <p style="color: #8a9ab0; font-size: 14px; margin-bottom: 10px;">تفاصيل بنود الاستهلاك الثابتة:</p>
+                    {tax_items_html}
+                </div>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # زر إعادة البدء وتصفير المحفظة بالكامل أسفل الصفحة
+    st.markdown("<br><br>", unsafe_allow_html=True)
     if st.button("🔄 تصفير المحفظة وإعادة حساب ميزانية جديدة بالكامل"):
         st.session_state.step = 1
         st.session_state.num_expenses = 1
